@@ -1,0 +1,8 @@
+export { default as ChangePassSvg } from './ChangePassSvg'
+export { default as FaqSvg } from './FaqSvg'
+export { default as GradeBookSvg } from './GradeBookSvg'
+export { default as LibraryCardSvg } from './LibraryCardSvg'
+export { default as LogoutSvg } from './LogoutSvg'
+export { default as NotificationsSvg } from './NotificationsSvg'
+export { default as ScheduleCallsSvg } from './ScheduleCallsSvg'
+export { default as UsefulLinksSvg } from './UsefulLinksSvg'
