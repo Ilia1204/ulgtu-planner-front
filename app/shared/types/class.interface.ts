@@ -1,15 +1,15 @@
 import type { IDiscipline } from './discipline.interface'
-import { IEmploymentInfo } from './employment-info.interface'
-import { IFlow } from './flow.interface'
-import { IRoom } from './room.interface'
+import type { IEmploymentInfo } from './employment-info.interface'
+import type { IFlow } from './flow.interface'
+import type { IRoom } from './room.interface'
 import type { IBase } from './root.interface'
-import { ISchedule } from './schedule.interface'
+import type { ISchedule } from './schedule.interface'
+import type { ISubgroup } from './subgroup.interface'
 
 export interface IClass extends IBase {
-	startTime: string
-	endTime: string
-	subgroup: string
+	subgroup: ISubgroup
 	type: EnumClassType
+	pairNumber: number
 
 	room: IRoom
 	schedule: ISchedule
@@ -23,7 +23,7 @@ export interface IClass extends IBase {
 
 export enum EnumClassType {
 	lecture = 'Лекция',
-	lab = 'Лабораторная',
+	lab = 'Лабораторные работы',
 	practice = 'Практика',
 	consultation = 'Консультация',
 	exam = 'Экзамен'

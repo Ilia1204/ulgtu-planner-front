@@ -1,21 +1,33 @@
 import { ProTextRegular } from '@/components'
 import ProTextSemiBold from '@/components/ui/custom-texts/ProTextSemiBold'
+import { COLORS } from '@/constants/colors.constants'
 import { getEducationLevelTranslation } from '@/shared/types/student-info.interface'
 import type { IFullUser } from '@/shared/types/user.interface'
-import React, { FC } from 'react'
-import { Image, View } from 'react-native'
+import React, { FC, useState } from 'react'
+import { StatusBar, View } from 'react-native'
+import ModalSelector from './ModalSelector'
 
 const MainInfo: FC<{ data: IFullUser | undefined }> = ({ data }) => {
 	const educationLevel = getEducationLevelTranslation(
 		data?.studentInfo?.educationLevel as string
 	)
-	const extraInfo = `${data?.studentInfo.creditCardNumber || '23/864'}-${data?.studentInfo.group.name}`
+	const extraInfo = `${data?.studentInfo?.creditCardNumber || 'YY/XXX'}-${data?.studentInfo?.subgroup?.group?.name}`
+
+	const [isVisibleModal, setIsVisibleModal] = useState(false)
 
 	return (
 		<View
 			className='bg-white px-5 flex-row items-center justify-between'
 			style={{ paddingVertical: 21 }}
 		>
+			<StatusBar
+				backgroundColor={
+					isVisibleModal
+						? 'rgba(92, 92, 92, 0.47)'
+						: COLORS.light.background.tertiary
+				}
+				barStyle='dark-content'
+			/>
 			<View>
 				<ProTextSemiBold
 					className='text-light-graphics-blue text-xs'
@@ -33,11 +45,7 @@ const MainInfo: FC<{ data: IFullUser | undefined }> = ({ data }) => {
 					text={extraInfo}
 				/>
 			</View>
-			<Image
-				source={require('@/assets/images/default-avatar.jpg')}
-				className='w-16 h-16 rounded-full'
-				resizeMode='center'
-			/>
+			<ModalSelector setIsVisibleModal={setIsVisibleModal} />
 		</View>
 	)
 }

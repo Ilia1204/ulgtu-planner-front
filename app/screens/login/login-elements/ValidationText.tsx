@@ -18,7 +18,7 @@ export const PasswordValidationText: FC<IValidationText> = props => {
 	return (
 		<ProTextRegular
 			style={{ fontSize: 15 }}
-			className='text-light-graphics-red px-4 absolute -bottom-7'
+			className='text-light-graphics-red absolute -bottom-7'
 			text={
 				isShort
 					? 'Минимальная длина 8 символов'

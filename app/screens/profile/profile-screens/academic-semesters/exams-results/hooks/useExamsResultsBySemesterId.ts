@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 export const useExamsResultsBySemesterId = (semesterId: string) => {
 	const {
 		data: results,
-		isLoading,
+		isFetching,
 		isPending,
 		refetch
 	} = useQuery({
@@ -12,5 +12,5 @@ export const useExamsResultsBySemesterId = (semesterId: string) => {
 		queryFn: () => studentExamsResultsService.getBySemesterId(semesterId)
 	})
 
-	return { results, isLoading, isPending, refetch }
+	return { results, isFetching, isPending, refetch }
 }

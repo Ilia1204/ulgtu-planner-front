@@ -19,7 +19,8 @@ export enum EnumExamResult {
 	fail = 'Неудовлетворительно',
 	credited = 'Зачтено',
 	not_credited = 'Не зачтено',
-	absense = 'Неявка'
+	absense = 'Неявка',
+	none = 'Не указано'
 }
 
 export const examResultTranslations: Record<string, string> = {
@@ -29,7 +30,8 @@ export const examResultTranslations: Record<string, string> = {
 	fail: EnumExamResult.fail,
 	credited: EnumExamResult.credited,
 	not_credited: EnumExamResult.not_credited,
-	absense: EnumExamResult.absense
+	absense: EnumExamResult.absense,
+	none: EnumExamResult.none
 }
 
 export const examResultTranslation = (examResult: string) => {

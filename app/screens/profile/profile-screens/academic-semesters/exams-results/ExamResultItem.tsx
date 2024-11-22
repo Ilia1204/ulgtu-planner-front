@@ -1,6 +1,7 @@
 import { ProTextRegular } from '@/components'
 import ProTextMedium from '@/components/ui/custom-texts/ProTextMedium'
 import {
+	EnumExamResult,
 	IStudentExamResult,
 	examResultTranslation,
 	examTypeTranslation
@@ -20,6 +21,7 @@ import Animated, {
 } from 'react-native-reanimated'
 import Chevron from './Chevron'
 import ExcellentMarkSvg from './exams-results-svg/ExcellentMarkSvg'
+import FailMarkSvg from './exams-results-svg/FailMarkSvg'
 
 const ExamResultItem: FC<{ result: IStudentExamResult }> = ({ result }) => {
 	const heightValue = useSharedValue(0)
@@ -39,20 +41,21 @@ const ExamResultItem: FC<{ result: IStudentExamResult }> = ({ result }) => {
 			'worklet'
 			if (heightValue.value === 0 && listRef) {
 				const measured = measure(listRef)
-				if (measured?.height) {
+				if (measured?.height)
 					heightValue.value = withTiming(measured.height, { duration: 300 })
-				} else {
-					heightValue.value = withTiming(48)
-				}
-			} else {
-				heightValue.value = withTiming(0, { duration: 300 })
-			}
+				else heightValue.value = withTiming(48)
+			} else heightValue.value = withTiming(0, { duration: 300 })
+
 			open.value = !open.value
 		})()
 	}
 
 	return (
-		<Pressable className='bg-white pl-5 pt-3 mb-3.5' onPress={handlePress}>
+		<Pressable
+			className='bg-white pl-5 pt-3 mb-3.5'
+			onPress={handlePress}
+			key={result.id}
+		>
 			<Chevron progress={progress} />
 			<View>
 				<ProTextMedium
@@ -74,7 +77,7 @@ const ExamResultItem: FC<{ result: IStudentExamResult }> = ({ result }) => {
 			<Animated.View style={[heightAnimationStyle]}>
 				<Animated.View ref={listRef}>
 					<View
-						className={`flex-row items-center ${result.finalTest.date && result.result !== 'good' ? 'py-2' : 'py-3'}`}
+						className={`flex-row items-center ${result.finalTest.date && examResultTranslation(result.result) !== EnumExamResult.none ? 'py-2' : 'py-3'}`}
 						style={{
 							borderTopWidth: 0.5,
 							borderTopColor: 'rgba(60, 60, 67, 0.13)'
@@ -82,14 +85,22 @@ const ExamResultItem: FC<{ result: IStudentExamResult }> = ({ result }) => {
 					>
 						{result.finalTest.date ? (
 							<>
-								{result.result !== 'good' && (
+								{examResultTranslation(result.result) !==
+									EnumExamResult.none && (
 									<>
-										<ExcellentMarkSvg
-											resultType={result.result}
-											examType={result.type}
-										/>
+										{examResultTranslation(result.result) ===
+											EnumExamResult.not_credited ||
+										examResultTranslation(result.result) ===
+											EnumExamResult.fail ? (
+											<FailMarkSvg />
+										) : (
+											<ExcellentMarkSvg
+												resultType={result.result}
+												examType={result.type}
+											/>
+										)}
 										<ProTextRegular
-											className='text-light-label-primary ml-4'
+											className='text-light-label-primary ml-3'
 											style={{ letterSpacing: -0.08 }}
 											text={`${examResultTranslation(result.result)}`}
 										/>
@@ -99,7 +110,8 @@ const ExamResultItem: FC<{ result: IStudentExamResult }> = ({ result }) => {
 									className='text-light-graphics-gray'
 									style={{ letterSpacing: -0.08 }}
 									text={
-										result.finalTest.date && result.result !== 'good'
+										result.finalTest.date &&
+										examResultTranslation(result.result) !== EnumExamResult.none
 											? ` (${dayjs(result.finalTest.date).format(
 													'D MMMM YYYY'
 												)})`

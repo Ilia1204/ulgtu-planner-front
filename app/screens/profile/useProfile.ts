@@ -18,7 +18,7 @@ export function useProfile() {
 		mutationFn: () => authService.logout(),
 		onSettled: () => {
 			setUser(null)
-			queryClient.removeQueries({ queryKey: ['profile'] })
+			queryClient.removeQueries({ queryKey: ['get profile'] })
 		}
 	})
 

@@ -1,30 +1,42 @@
 import { ProTextRegular } from '@/components'
+import ProTextMedium from '@/components/ui/custom-texts/ProTextMedium'
 import ProTextSemiBold from '@/components/ui/custom-texts/ProTextSemiBold'
 import { COLORS } from '@/constants/colors.constants'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { useTypedRoute } from '@/hooks/useTypedRoute'
-import React, { FC } from 'react'
-import { Pressable, ScrollView, StatusBar, Text, View } from 'react-native'
+import { IStudentExamResult } from '@/shared/types/student-exam-result.interface'
+import React, { FC, useCallback } from 'react'
+import { FlatList, Pressable, View } from 'react-native'
 import BackIconSvg from '../BackIconSvg'
 import ExamResultItem from './ExamResultItem'
+import SkeletonExamResult from './SkeletonExamResult'
 import { useExamsResultsBySemesterId } from './hooks/useExamsResultsBySemesterId'
 
 const ExamsResults: FC = () => {
 	const { goBack } = useTypedNavigation()
 	const { params } = useTypedRoute<'ExamsResults'>()
-	const { results } = useExamsResultsBySemesterId(params.semesterId)
+	const { results, isFetching } = useExamsResultsBySemesterId(params.semesterId)
+
+	const renderItem = useCallback(
+		({ item: result }: { item: IStudentExamResult }) => {
+			return <ExamResultItem key={result.id} result={result} />
+		},
+		[]
+	)
 
 	return (
 		<View
 			className='h-full'
 			style={{ backgroundColor: COLORS.light.background.quaternary }}
 		>
-			<StatusBar backgroundColor={COLORS.light.background.tertiary} />
 			<View
-				className='flex-row items-center justify-between h-12 px-2 border-b-[#3c3c4321]'
+				className='flex-row items-center h-12 px-2 border-b-[#3c3c4321]'
 				style={{ borderBottomWidth: 0.5 }}
 			>
-				<Pressable className='flex-row items-center' onPress={goBack}>
+				<Pressable
+					className='flex-row items-center absolute left-2.5'
+					onPress={goBack}
+				>
 					<BackIconSvg />
 					<ProTextRegular
 						text='Семестр'
@@ -32,17 +44,33 @@ const ExamsResults: FC = () => {
 						style={{ fontSize: 17 }}
 					/>
 				</Pressable>
-				<ProTextSemiBold
-					style={{ letterSpacing: -0.41, fontSize: 17 }}
-					text='Предметы'
-				/>
-				<Text style={{ fontSize: 19, opacity: 0 }}>Предметы</Text>
+				<View style={{ flex: 1, alignItems: 'center' }}>
+					<ProTextSemiBold
+						style={{
+							letterSpacing: -0.41,
+							fontSize: 17,
+							textAlign: 'center'
+						}}
+						text='Предметы'
+					/>
+				</View>
 			</View>
-			<ScrollView showsVerticalScrollIndicator={false}>
-				{results?.map(result => (
-					<ExamResultItem key={result.id} result={result} />
-				))}
-			</ScrollView>
+			{isFetching ? (
+				<SkeletonExamResult />
+			) : (
+				<FlatList
+					data={results ? results : []}
+					keyExtractor={item => item.id.toString()}
+					showsVerticalScrollIndicator={false}
+					renderItem={renderItem}
+					ListEmptyComponent={() => (
+						<ProTextMedium
+							className='text-light-graphics-gray text-base px-4 text-center'
+							text='Экзаменов пока нет'
+						/>
+					)}
+				/>
+			)}
 		</View>
 	)
 }

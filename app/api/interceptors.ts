@@ -7,7 +7,7 @@ import axios, { type CreateAxiosDefaults } from 'axios'
 import { errorCatch } from './error'
 
 export const SERVER_URL_DEV = 'http://localhost:4200'
-export const SERVER_URL_EXTRA = 'https://a077-176-116-137-120.ngrok-free.app'
+export const SERVER_URL_EXTRA = 'https://9227-176-116-137-213.ngrok-free.app'
 
 const options: CreateAxiosDefaults = {
 	baseURL: `${SERVER_URL_EXTRA}/api`,

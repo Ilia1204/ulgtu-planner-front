@@ -3,7 +3,7 @@ import ProTextSemiBold from '@/components/ui/custom-texts/ProTextSemiBold'
 import { COLORS } from '@/constants/colors.constants'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import React, { FC } from 'react'
-import { Pressable, StatusBar, Text, View } from 'react-native'
+import { Pressable, View } from 'react-native'
 import { Fade, Placeholder, PlaceholderLine } from 'rn-placeholder'
 import ArrowRightSvg from '../../profile-svg/common/ArrowRight'
 import BackIconSvg from './BackIconSvg'
@@ -18,12 +18,14 @@ const AcademicSemesters: FC = () => {
 			className='h-full'
 			style={{ backgroundColor: COLORS.light.background.quaternary }}
 		>
-			<StatusBar backgroundColor={COLORS.light.background.tertiary} />
 			<View
 				className='flex-row items-center justify-between h-12 px-2 border-b-[#3c3c4321]'
 				style={{ borderBottomWidth: 0.5 }}
 			>
-				<Pressable className='flex-row items-center' onPress={goBack}>
+				<Pressable
+					className='flex-row items-center absolute left-2.5'
+					onPress={goBack}
+				>
 					<BackIconSvg />
 					<ProTextRegular
 						text='Профиль'
@@ -31,11 +33,12 @@ const AcademicSemesters: FC = () => {
 						style={{ fontSize: 17 }}
 					/>
 				</Pressable>
-				<ProTextSemiBold
-					style={{ letterSpacing: -0.41, fontSize: 17 }}
-					text='Семестр'
-				/>
-				<Text style={{ fontSize: 22, opacity: 0 }}>Семестр</Text>
+				<View style={{ flex: 1, alignItems: 'center' }}>
+					<ProTextSemiBold
+						style={{ letterSpacing: -0.41, fontSize: 17 }}
+						text='Семестр'
+					/>
+				</View>
 			</View>
 			<View className='bg-white'>
 				{!semesters?.length

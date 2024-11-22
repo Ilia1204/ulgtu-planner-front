@@ -30,6 +30,14 @@ class UserService {
 		return response.data
 	}
 
+	async updateAvatar(data: Pick<TypeUserForm, 'avatarPath'>) {
+		const response = await axiosWithAuth.put<IUser>(
+			`${this.BASE_URL}/update-avatar`,
+			data
+		)
+		return response.data
+	}
+
 	async toggleFavorites(productId: string) {
 		const response = await axiosWithAuth.patch<IUser>(
 			`${this.BASE_URL}/favorites/${productId}`

@@ -23,6 +23,15 @@ export const authService = {
 		return response
 	},
 
+	async validatePassword(data: { password: string }) {
+		const response = await axiosWithAuth.post<{ password: string }>(
+			'/auth/validate-password',
+			data
+		)
+
+		return response
+	},
+
 	async setRecoveryEmail(data: { recoveryEmail: string }) {
 		const response = await axiosWithAuth.post<{ recoveryEmail: string }>(
 			'/auth/set-recovery-email',

@@ -3,8 +3,9 @@ import ProTextSemiBold from '@/components/ui/custom-texts/ProTextSemiBold'
 import { COLORS } from '@/constants/colors.constants'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import { getEducationLevelTranslation } from '@/shared/types/student-info.interface'
+import dayjs from 'dayjs'
 import React, { FC } from 'react'
-import { Image, Pressable, StatusBar, View } from 'react-native'
+import { Image, Pressable, View } from 'react-native'
 import { useProfile } from '../../useProfile'
 import BackIconSvg from '../academic-semesters/BackIconSvg'
 import BarCodeSvg from './BarCodeSvg'
@@ -22,7 +23,6 @@ const ReaderTicket: FC = () => {
 			className='h-full'
 			style={{ backgroundColor: COLORS.light.background.quaternary }}
 		>
-			<StatusBar backgroundColor={COLORS.light.background.tertiary} />
 			<Pressable
 				className='flex-row items-center self-start h-12 px-4'
 				onPress={goBack}
@@ -82,7 +82,7 @@ const ReaderTicket: FC = () => {
 						<ProTextRegular
 							className='mt-1'
 							style={{ fontSize: 17, letterSpacing: -0.41 }}
-							text='20.12.2004'
+							text={dayjs(data?.birthDate).format('DD.MM.YYYY')}
 						/>
 					</View>
 					<View>

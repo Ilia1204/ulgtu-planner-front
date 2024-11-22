@@ -9,6 +9,7 @@ export type TypeRootStackParamList = {
 	ReaderTicket: undefined
 	Search: undefined
 	ScheduleCalls: undefined
+	ClassItem: {}
 	ExamsResults: {
 		semesterId: string
 	}

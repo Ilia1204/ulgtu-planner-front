@@ -1,5 +1,5 @@
 import ButtonBackground from '@/components/ui/buttons/ButtonBackground'
-import Field from '@/components/ui/field/Field'
+import Field from '@/components/ui/form-elements/field/Field'
 import { validEmail } from '@/shared/email.rgx'
 import type { IAuthForm } from '@/shared/types/auth.interface'
 import React, { FC } from 'react'
@@ -12,6 +12,7 @@ interface IFormContent {
 	step: number
 	error: string
 	input: string
+	isRegistered: boolean
 	setInput: (input: string) => void
 	handleSubmit: UseFormHandleSubmit<IAuthForm, undefined>
 	onSubmit: () => void
@@ -22,12 +23,22 @@ interface IFormContent {
 }
 
 export const FormContent: FC<IFormContent> = props => {
-	const { step, error, input, setInput, handleSubmit, onSubmit, updatedSteps } =
-		props
+	const {
+		step,
+		error,
+		input,
+		setInput,
+		handleSubmit,
+		onSubmit,
+		updatedSteps,
+		isRegistered
+	} = props
+
+	console.log(error)
 
 	return (
 		<View>
-			<View>
+			<View className='mx-4'>
 				<Field
 					val={input}
 					onChange={setInput}
@@ -35,7 +46,7 @@ export const FormContent: FC<IFormContent> = props => {
 					isSecure={step === 1 && true}
 				/>
 				{error && <ErrorText error={error} />}
-				{(step === 1 || step === 2) && (
+				{(step === 1 || step === 2) && !isRegistered && (
 					<PasswordValidationText input={input} step={step} />
 				)}
 			</View>
@@ -44,7 +55,8 @@ export const FormContent: FC<IFormContent> = props => {
 				onPress={
 					(step === 1 && input.length >= 8 && /^(?=.*\d.*\d).*$/.test(input)) ||
 					(step === 2 && validEmail.test(input)) ||
-					step === 0
+					step === 0 ||
+					isRegistered
 						? handleSubmit(onSubmit)
 						: () => {}
 				}

@@ -20,6 +20,8 @@ export const useLoginForm = () => {
 		isPending,
 		isPendingEmail,
 		isPendingSetPass,
+		validatePassword,
+		isPendingValidatePassword,
 		data
 	} = useLogin({
 		reset,
@@ -41,7 +43,7 @@ export const useLoginForm = () => {
 
 		if (isRegistered) {
 			if (step === 0) mutate(inputData)
-			else if (step === 1) setPassword({ password: input })
+			else if (step === 1) validatePassword({ password: input })
 		} else {
 			switch (step) {
 				case 0:
@@ -52,7 +54,6 @@ export const useLoginForm = () => {
 					break
 				case 2:
 					setRecoveryEmail({ recoveryEmail: input })
-
 					break
 				default:
 					break
@@ -87,13 +88,18 @@ export const useLoginForm = () => {
 
 	return {
 		step,
-		isPending: isPending || isPendingEmail || isPendingSetPass,
+		isPending:
+			isPending ||
+			isPendingEmail ||
+			isPendingSetPass ||
+			isPendingValidatePassword,
 		currentStep: registrationSteps[step] || registrationSteps[0],
 		handleSubmit,
 		error,
 		input,
 		setInput,
 		onSubmit,
+		isRegistered,
 		updatedSteps
 	}
 }

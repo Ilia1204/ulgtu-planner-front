@@ -1,10 +1,12 @@
 import { ProTextRegular } from '@/components'
 import React from 'react'
 
-export const ErrorText = ({ error }: { error: string }) => (
-	<ProTextRegular
-		style={{ fontSize: 15 }}
-		className='text-light-graphics-red px-4 absolute -bottom-10'
-		text={error}
-	/>
-)
+export const ErrorText = ({ error }: { error: string }) => {
+	return (
+		<ProTextRegular
+			style={{ fontSize: 15 }}
+			className={`text-light-graphics-red absolute ${error.length > 34 ? '-bottom-10' : '-bottom-6'}`}
+			text={error}
+		/>
+	)
+}

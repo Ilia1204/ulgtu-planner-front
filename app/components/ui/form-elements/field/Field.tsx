@@ -1,5 +1,5 @@
 import { COLORS } from '@/constants/colors.constants'
-import React, { FC } from 'react'
+import React, { FC, useCallback } from 'react'
 import { TextInput } from 'react-native'
 import type { IField } from './field.interface'
 
@@ -25,21 +25,27 @@ const Field: FC<IField> = props => {
 		...rest
 	} = props
 
+	const onChangeText = useCallback(
+		(val: string) => {
+			onChange(val)
+		},
+		[onChange]
+	)
+
 	return (
 		<TextInput
 			placeholder={placeholder}
 			placeholderTextColor={placeholderTextColor}
 			autoCorrect={false}
-			returnKeyType='next'
-			className='py-4 mt-5 mx-4 px-4 border border-[#E6E6E7] rounded-2xl'
+			className='py-4 mt-5 px-4 border border-[#E6E6E7] rounded-2xl'
 			style={{
 				fontFamily: 'pro-text-regular',
 				fontSize: 17,
 				letterSpacing: -0.41
 			}}
 			selectionColor={COLORS.light.graphics.blue}
-			value={val?.trimStart()}
-			onChangeText={onChange}
+			value={val}
+			onChangeText={onChangeText}
 			keyboardType={keyboardType}
 			secureTextEntry={isSecure}
 			autoCapitalize={autoCapitalize}

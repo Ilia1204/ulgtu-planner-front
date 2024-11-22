@@ -3,7 +3,7 @@ import ProTextMedium from '@/components/ui/custom-texts/ProTextMedium'
 import { COLORS } from '@/constants/colors.constants'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
 import React, { FC } from 'react'
-import { Pressable, StatusBar, View } from 'react-native'
+import { Pressable, View } from 'react-native'
 import BackIconSvg from '../academic-semesters/BackIconSvg'
 import { scheduleCalls } from './schedule-calls.data'
 
@@ -15,7 +15,6 @@ const ScheduleCalls: FC = () => {
 			className='h-full'
 			style={{ backgroundColor: COLORS.light.background.quaternary }}
 		>
-			<StatusBar backgroundColor={COLORS.light.background.tertiary} />
 			<Pressable className='flex-row items-center h-12 px-4' onPress={goBack}>
 				<BackIconSvg />
 				<ProTextRegular

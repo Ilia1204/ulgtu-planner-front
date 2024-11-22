@@ -4,7 +4,7 @@ import ProTextBold from '@/components/ui/custom-texts/ProTextSemiBold'
 import { COLORS } from '@/constants/colors.constants'
 import { useNavigation } from '@react-navigation/native'
 import React, { FC } from 'react'
-import { Linking, Pressable, StatusBar, Text, View } from 'react-native'
+import { Linking, Pressable, View } from 'react-native'
 import ArrowRightSvg from '../../profile-svg/common/ArrowRight'
 import BackIconSvg from '../academic-semesters/BackIconSvg'
 import { usefulLinks } from './useful-links.data'
@@ -17,21 +17,24 @@ const UsefulLinks: FC = () => {
 			className='h-full'
 			style={{ backgroundColor: COLORS.light.background.quaternary }}
 		>
-			<StatusBar backgroundColor={COLORS.light.background.tertiary} />
 			<View
-				className='flex-row items-center justify-between h-12 px-2 border-b-[#3c3c4321]'
+				className='flex-row items-center h-12 px-2 border-b-[#3c3c4321]'
 				style={{ borderBottomWidth: 0.5 }}
 			>
-				<Pressable className='flex-row items-center' onPress={goBack}>
+				<Pressable
+					className='flex-row items-center absolute left-2.5'
+					onPress={goBack}
+				>
 					<BackIconSvg />
 					<ProTextRegular
 						text='Профиль'
-						className='text-light-graphics-blue ml-0.5'
+						className='text-light-graphics-blue'
 						style={{ fontSize: 17 }}
 					/>
 				</Pressable>
-				<ProTextBold text='Полезные ссылки' style={{ fontSize: 17 }} />
-				<Text style={{ fontSize: 20, opacity: 0 }}>Семестр</Text>
+				<View className='flex-1 items-center ml-1'>
+					<ProTextBold text='Полезные ссылки' style={{ fontSize: 17 }} />
+				</View>
 			</View>
 			<View className='flex-row items-center p-3 px-5'>
 				<ProTextMedium

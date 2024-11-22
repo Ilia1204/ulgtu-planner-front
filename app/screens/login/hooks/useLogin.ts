@@ -59,6 +59,22 @@ export const useLogin = (props: IUseLogin) => {
 		}
 	})
 
+	const { mutate: validatePassword, isPending: isPendingValidatePassword } =
+		useMutation({
+			mutationKey: ['validate-password'],
+			mutationFn: (data: { password: string }) =>
+				authService.validatePassword(data),
+			onSuccess() {
+				reset()
+				setUser(data?.data.user ?? null)
+				saveUserStorage(data?.data as IAuthResponse)
+			},
+			onError(error: any) {
+				setError(errorCatch(error))
+				console.log(error.message)
+			}
+		})
+
 	const { mutate: setRecoveryEmail, isPending: isPendingEmail } = useMutation({
 		mutationKey: ['set-recovery-email'],
 		mutationFn: (data: { recoveryEmail: string }) =>
@@ -80,10 +96,12 @@ export const useLogin = (props: IUseLogin) => {
 			isPending,
 			setPassword,
 			setRecoveryEmail,
+			validatePassword,
 			data,
 			isPendingEmail,
-			isPendingSetPass
+			isPendingSetPass,
+			isPendingValidatePassword
 		}),
-		[isPending, isPendingSetPass, isPendingEmail]
+		[isPending, isPendingSetPass, isPendingEmail, isPendingValidatePassword]
 	)
 }

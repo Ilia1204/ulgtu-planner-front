@@ -14,7 +14,7 @@ export interface IUser extends IBase {
 	cardInfo: ICardInfo
 
 	libraryCardNumber: string
-	birth_date: string
+	birthDate: string
 	roles: EnumUserRole[]
 
 	studentInfo: IStudentInfo

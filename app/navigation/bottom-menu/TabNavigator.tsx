@@ -1,19 +1,22 @@
 import ProTextMedium from '@/components/ui/custom-texts/ProTextMedium'
 import { COLORS } from '@/constants/colors.constants'
 import { Chat, Search } from '@/screens'
-import { Ionicons } from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import React, { FC } from 'react'
 import { View } from 'react-native'
 import ProfileStack from '../stacks/profile-stack/ProfileStack'
 import ScheduleStack from '../stacks/schedule-stack/ScheduleStack'
+import BriefcaseSvg from './bottom-menu-svg/BriefcaseSvg'
+import ChatSvg from './bottom-menu-svg/ChatSvg'
+import SearchSvg from './bottom-menu-svg/SearchSvg'
+import UserSvg from './bottom-menu-svg/UserSvg'
 import { tabNavStyles } from './tab-navigator.styles'
 
 const Tab = createBottomTabNavigator()
 
 const TabNavigator: FC = () => (
 	<Tab.Navigator
-		screenOptions={({ route }) => ({
+		screenOptions={{
 			headerShown: false,
 			tabBarActiveTintColor: COLORS.light.graphics.blue,
 			tabBarInactiveTintColor: COLORS.light.graphics.gray,
@@ -23,11 +26,10 @@ const TabNavigator: FC = () => (
 				height: 70,
 				paddingBottom: 7,
 				borderTopColor: '#3c3c4321',
-				borderTopWidth: 0.5,
-				display: route.name === 'ChangePassword' ? 'none' : 'flex'
+				borderTopWidth: 0.5
 			},
 			tabBarLabelStyle: { display: 'none' }
-		})}
+		}}
 		initialRouteName='ScheduleStack'
 	>
 		<Tab.Screen
@@ -36,7 +38,7 @@ const TabNavigator: FC = () => (
 			options={{
 				tabBarIcon: ({ color }) => (
 					<View className='items-center justify-center'>
-						<Ionicons name='briefcase' size={23} color={color} />
+						<BriefcaseSvg color={color} />
 						<ProTextMedium
 							text='Расписание'
 							style={{ color, ...tabNavStyles.tabScreen }}
@@ -51,7 +53,7 @@ const TabNavigator: FC = () => (
 			options={{
 				tabBarIcon: ({ color }) => (
 					<View className='items-center justify-center'>
-						<Ionicons name='chatbubble' size={23} color={color} />
+						<ChatSvg color={color} />
 						<ProTextMedium
 							text='Чат'
 							style={{ color, ...tabNavStyles.tabScreen }}
@@ -66,7 +68,7 @@ const TabNavigator: FC = () => (
 			options={{
 				tabBarIcon: ({ color }) => (
 					<View className='items-center justify-center'>
-						<Ionicons name='search' size={23} color={color} />
+						<SearchSvg color={color} />
 						<ProTextMedium
 							text='Поиск'
 							style={{ color, ...tabNavStyles.tabScreen }}
@@ -81,7 +83,7 @@ const TabNavigator: FC = () => (
 			options={{
 				tabBarIcon: ({ color }) => (
 					<View className='items-center justify-center'>
-						<Ionicons name='person' size={23} color={color} />
+						<UserSvg color={color} />
 						<ProTextMedium
 							text='Профиль'
 							style={{ color, ...tabNavStyles.tabScreen }}

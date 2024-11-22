@@ -47,7 +47,10 @@ export default function App() {
 						<Navigation />
 					</SafeAreaProvider>
 				</AuthProvider>
-				<StatusBar barStyle='dark-content' backgroundColor={'#fff'} />
+				<StatusBar
+					backgroundColor={COLORS.light.background.tertiary}
+					barStyle='dark-content'
+				/>
 			</QueryClientProvider>
 		</GestureHandlerRootView>
 	)

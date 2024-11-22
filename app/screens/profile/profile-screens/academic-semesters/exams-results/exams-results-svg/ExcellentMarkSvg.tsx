@@ -30,7 +30,9 @@ const ExcellentMarkSvg: FC<{ resultType: string; examType: string }> = ({
 					: examTypeTranslation(examType) === EnumExamType.credit ||
 						  examTypeTranslation(examType) === EnumExamType.referat
 						? '#3bdd63'
-						: COLORS.light.graphics.orange
+						: examResultTranslation(resultType) === EnumExamResult.satisfactory
+							? '#5AC8FA'
+							: COLORS.light.graphics.orange
 			}
 			rx={7}
 		/>

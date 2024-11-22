@@ -27,7 +27,8 @@ const Login = () => {
 		input,
 		setInput,
 		onSubmit,
-		updatedSteps
+		updatedSteps,
+		isRegistered
 	} = useLoginForm()
 
 	useEffect(() => {
@@ -58,6 +59,7 @@ const Login = () => {
 									setInput={setInput}
 									handleSubmit={handleSubmit}
 									onSubmit={onSubmit}
+									isRegistered={isRegistered}
 									updatedSteps={updatedSteps}
 								/>
 							</>

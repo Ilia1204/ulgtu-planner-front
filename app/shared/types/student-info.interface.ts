@@ -1,5 +1,5 @@
-import type { IGroup } from './group.interface'
 import type { IBase } from './root.interface'
+import { ISubgroup } from './subgroup.interface'
 
 export interface IStudentInfo extends IBase {
 	creditCardNumber: string
@@ -13,7 +13,7 @@ export interface IStudentInfo extends IBase {
 	educationLevel: EnumEducationLevel
 	fundingSource: EnumFundingSource
 	academicDebt: number
-	group: IGroup
+	subgroup: ISubgroup
 }
 
 export enum EnumStudyForm {

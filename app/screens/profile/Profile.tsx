@@ -1,7 +1,7 @@
 import { COLORS } from '@/constants/colors.constants'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
-import React, { FC } from 'react'
-import { Alert, Linking, StatusBar, View } from 'react-native'
+import React, { FC, useState } from 'react'
+import { Alert, Linking, View } from 'react-native'
 import DashBoardItem from './dashboard/dashboard-item/DashBoardItem'
 import { dashboardData } from './dashboard/dashboard.data'
 import MainInfo from './profile-elements/MainInfo'
@@ -11,15 +11,13 @@ import { useProfile } from './useProfile'
 const Profile: FC = () => {
 	const { data, logout, isLoading } = useProfile()
 	const { navigate } = useTypedNavigation()
-
-	const flowId = data?.studentInfo.group.flow.id
+	const [input, setInput] = useState('')
 
 	return (
 		<View
 			className='h-full'
 			style={{ backgroundColor: COLORS.light.background.quaternary }}
 		>
-			<StatusBar backgroundColor={COLORS.light.background.tertiary} />
 			<View
 				className='h-12 border-b-[#3c3c4321]'
 				style={{ borderBottomWidth: 0.5 }}
@@ -51,7 +49,9 @@ const Profile: FC = () => {
 							item.name === 'FAQ'
 								? Alert.alert(
 										'Внимание',
-										'Данный раздел находится в разработке'
+										'Данный раздел находится в разработке',
+										[{ text: 'ОК' }],
+										{ cancelable: true }
 									)
 								: navigate(item.path as any)
 						}
@@ -73,7 +73,8 @@ const Profile: FC = () => {
 										[
 											{ text: 'Отменить' },
 											{ text: 'Выйти', onPress: () => logout() }
-										]
+										],
+										{ cancelable: true }
 									)
 								: navigate(item.path as any)
 						}

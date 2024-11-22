@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { Platform, useWindowDimensions } from 'react-native'
-import Animated, {
+import {
+	SharedValue,
 	clamp,
 	interpolate,
 	useAnimatedReaction,
@@ -11,7 +12,7 @@ import Animated, {
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export const useBottomSheetAnimation = (
-	animatedPosition: Animated.SharedValue<number>,
+	animatedPosition: SharedValue<number>,
 	CORNER_RADIUS: number
 ) => {
 	const { top } = useSafeAreaInsets()

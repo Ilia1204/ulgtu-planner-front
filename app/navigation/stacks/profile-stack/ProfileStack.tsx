@@ -1,5 +1,4 @@
 import { Loader } from '@/components'
-import { screensWithoutTabBar } from '@/navigation/bottom-menu/screen-without-tab-bar'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { FC, useEffect, useState } from 'react'
@@ -36,16 +35,8 @@ const ProfileStack: FC = () => {
 			{profileStackRoutes.map(route => (
 				<Stack.Screen
 					key={route.name}
+					options={{ headerShown: false }}
 					{...route}
-					options={({ navigation }) => ({
-						headerShown: false,
-						tabBarStyle: {
-							display: screensWithoutTabBar.includes(navigation.name)
-								? 'none'
-								: 'flex'
-						},
-						tabBarVisible: !screensWithoutTabBar.includes(navigation.name)
-					})}
 				/>
 			))}
 		</Stack.Navigator>

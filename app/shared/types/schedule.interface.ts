@@ -5,12 +5,13 @@ import type { IBase } from './root.interface'
 export interface ISchedule extends IBase {
 	dayWeek: EnumDayWeek
 	weekType: EnumWeekType
-	timeStart: string
-	timeEnd: string
+	date: string
 
 	group: IGroup
 	classes: IClass[]
 }
+
+export type TypeScheduleForm = Omit<ISchedule, 'id'> & {}
 
 export enum EnumDayWeek {
 	monday = 'Понедельник',
