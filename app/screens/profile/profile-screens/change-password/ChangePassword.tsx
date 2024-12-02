@@ -40,8 +40,8 @@ const ChangePassword = () => {
 					tabBarStyle: {
 						backgroundColor: COLORS.light.background.quaternary,
 						elevation: 0,
-						height: 70,
-						paddingBottom: 7,
+						height: 65,
+						paddingVertical: 7,
 						borderTopColor: '#3c3c4321',
 						borderTopWidth: 0.5
 					}

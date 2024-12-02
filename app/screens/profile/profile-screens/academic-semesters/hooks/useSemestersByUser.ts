@@ -5,12 +5,12 @@ export function useSemestersByUser() {
 	const {
 		data: semesters,
 		isLoading,
-		isPending,
+		isFetching,
 		refetch
 	} = useQuery({
 		queryKey: ['get semesters by user'],
 		queryFn: () => semesterService.getByUser()
 	})
 
-	return { semesters, isLoading, isPending, refetch }
+	return { semesters, isLoading, isFetching, refetch }
 }

@@ -22,6 +22,7 @@ const ProTextSemiBold: FC<PropsWithChildren<IProTextSemiBold>> = props => {
 			{...rest}
 		>
 			{text}
+			{children ? children : null}
 		</Text>
 	)
 }

@@ -26,18 +26,6 @@ class SemesterService {
 		return response.data
 	}
 
-	async updateProfile(data: TypeSemesterForm) {
-		const response = await axiosWithAuth.put<ISemester>(this.BASE_URL, data)
-		return response.data
-	}
-
-	async toggleFavorites(productId: string) {
-		const response = await axiosWithAuth.patch<ISemester>(
-			`${this.BASE_URL}/favorites/${productId}`
-		)
-		return response.data
-	}
-
 	async update(id: string, data: TypeSemesterForm) {
 		const response = await axiosWithAuth.put<ISemester>(
 			`/semesters/${id}`,
@@ -48,13 +36,6 @@ class SemesterService {
 
 	async delete(id: string) {
 		const response = await axiosWithAuth.delete<ISemester>(`/semesters/${id}`)
-		return response.data
-	}
-
-	async deleteAllFavorites() {
-		const response = await axiosWithAuth.delete<ISemester>(
-			`${this.BASE_URL}/favorites`
-		)
 		return response.data
 	}
 }

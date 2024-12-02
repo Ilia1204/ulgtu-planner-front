@@ -1,6 +1,7 @@
 import { errorCatch } from '@/api/error'
 import { userService } from '@/services/user.service'
 import { TypeUserForm } from '@/shared/types/user.interface'
+import { showToast } from '@/utils/show-toast'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export function useUpdateAvatar() {
@@ -14,7 +15,9 @@ export function useUpdateAvatar() {
 			queryClient.invalidateQueries({ queryKey: ['get profile'] })
 		},
 		onError(error) {
-			console.log(errorCatch(error))
+			setTimeout(() => {
+				showToast('Ошибка создания заметки: ', 'error', errorCatch(error))
+			}, 500)
 		}
 	})
 

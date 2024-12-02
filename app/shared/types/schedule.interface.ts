@@ -7,7 +7,6 @@ export interface ISchedule extends IBase {
 	weekType: EnumWeekType
 	date: string
 
-	group: IGroup
 	classes: IClass[]
 }
 

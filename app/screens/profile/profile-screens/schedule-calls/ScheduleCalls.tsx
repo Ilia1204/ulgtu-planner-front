@@ -15,7 +15,11 @@ const ScheduleCalls: FC = () => {
 			className='h-full'
 			style={{ backgroundColor: COLORS.light.background.quaternary }}
 		>
-			<Pressable className='flex-row items-center h-12 px-4' onPress={goBack}>
+			<Pressable
+				className='flex-row items-center px-4'
+				onPress={goBack}
+				style={{ height: 50 }}
+			>
 				<BackIconSvg />
 				<ProTextRegular
 					text='Профиль'

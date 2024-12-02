@@ -1,5 +1,5 @@
 const scheduleTimes = [
-	{ start: '8:30', end: '9:50' },
+	{ start: '08:30', end: '09:50' },
 	{ start: '10:00', end: '11:20' },
 	{ start: '11:30', end: '12:50' },
 	{ start: '13:30', end: '14:50' },
@@ -11,5 +11,7 @@ const scheduleTimes = [
 
 export const getLessonTimes = (pairNumber: number) => {
 	const index = pairNumber - 1
-	return scheduleTimes[index] || { start: '', end: '' }
+	if (index < 0 || index >= scheduleTimes.length) return { start: '', end: '' }
+
+	return scheduleTimes[index]
 }

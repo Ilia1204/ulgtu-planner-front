@@ -1,6 +1,7 @@
 import { SERVER_URL_EXTRA } from '@/api/interceptors'
 import { Loader } from '@/components'
 import { COLORS } from '@/constants/colors.constants'
+import UserSvg from '@/navigation/bottom-menu/bottom-menu-svg/UserSvg'
 import { getMediaSource } from '@/utils/get-media-source'
 import {
 	CameraType,
@@ -11,8 +12,9 @@ import {
 	requestMediaLibraryPermissionsAsync
 } from 'expo-image-picker'
 import React, { Dispatch, FC, SetStateAction, useState } from 'react'
-import { Alert, Image } from 'react-native'
+import { Alert, Image, View } from 'react-native'
 import Modal from 'react-native-modal-selector'
+import { useProfile } from '../useProfile'
 import { useUpdateAvatar } from './useUpdateAvatar'
 
 const ModalSelector: FC<{
@@ -21,6 +23,7 @@ const ModalSelector: FC<{
 	const [uploadedImage, setUploadedImage] = useState('')
 	const [isLoading, setIsLoading] = useState(false)
 
+	const { data } = useProfile()
 	const { mutate } = useUpdateAvatar()
 
 	const uploadImageToServer = async (uri: string) => {
@@ -35,6 +38,7 @@ const ModalSelector: FC<{
 		}
 
 		formData.append('file', file as any)
+		formData.append('folder', 'users')
 
 		try {
 			setIsLoading(true)
@@ -105,9 +109,9 @@ const ModalSelector: FC<{
 		}
 	}
 
-	const handleOptionSelect = (key: number) => {
-		if (key === 2) pickImageFromGallery()
-		else if (key === 3) takePhoto()
+	const handleOptionSelect = (label: string) => {
+		if (label === 'Выбрать из библиотеки') pickImageFromGallery()
+		else if (label === 'Сделать фотографию') takePhoto()
 	}
 
 	return (
@@ -117,9 +121,10 @@ const ModalSelector: FC<{
 				{ key: 2, label: 'Выбрать из библиотеки' },
 				{ key: 3, label: 'Сделать фотографию' }
 			]}
+			keyExtractor={item => item.key.toString()}
 			touchableActiveOpacity={1}
 			cancelText='Отменить'
-			onChange={option => handleOptionSelect(option.key)}
+			onChange={option => handleOptionSelect(option.label)}
 			onModalOpen={() => setIsVisibleModal(true)}
 			onModalClose={() => setIsVisibleModal(false)}
 			cancelTextStyle={{
@@ -184,15 +189,22 @@ const ModalSelector: FC<{
 			{isLoading ? (
 				<Loader />
 			) : (
-				<Image
-					source={
-						uploadedImage
-							? getMediaSource(uploadedImage)
-							: require('@/assets/images/default-avatar.jpg')
-					}
-					className='w-16 h-16 rounded-full'
-					resizeMode='center'
-				/>
+				<>
+					{uploadedImage || data?.avatarPath ? (
+						<Image
+							source={getMediaSource(uploadedImage || data?.avatarPath)}
+							className='w-16 h-16 rounded-full'
+							resizeMode='center'
+						/>
+					) : (
+						<View
+							className='w-16 h-16 rounded-full bg-light-graphics-gray6 justify-center items-center'
+							style={{ elevation: 3 }}
+						>
+							<UserSvg color={COLORS.light.graphics.gray} />
+						</View>
+					)}
+				</>
 			)}
 		</Modal>
 	)

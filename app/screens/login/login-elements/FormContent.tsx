@@ -34,8 +34,6 @@ export const FormContent: FC<IFormContent> = props => {
 		isRegistered
 	} = props
 
-	console.log(error)
-
 	return (
 		<View>
 			<View className='mx-4'>

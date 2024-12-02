@@ -1,5 +1,4 @@
 import type { IBase } from './root.interface'
-import { IUser } from './user.interface'
 
 export interface ISemester extends IBase {
 	number: string
@@ -7,4 +6,4 @@ export interface ISemester extends IBase {
 	// finalTests: IFinalTests[]
 }
 
-export type TypeSemesterForm = Omit<IUser, 'id'> & {}
+export type TypeSemesterForm = Omit<ISemester, 'id'> & {}

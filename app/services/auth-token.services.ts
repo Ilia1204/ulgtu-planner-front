@@ -1,4 +1,6 @@
+import { errorCatch } from '@/api/error'
 import type { IAuthResponse } from '@/shared/types/auth.interface'
+import { showToast } from '@/utils/show-toast'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { deleteItemAsync, getItemAsync, setItemAsync } from 'expo-secure-store'
 
@@ -35,7 +37,9 @@ export const saveUserStorage = async (data: IAuthResponse) => {
 	try {
 		await AsyncStorage.setItem(EnumAsyncStorage.USER, JSON.stringify(data.name))
 	} catch (e: any) {
-		console.log(e.message)
+		setTimeout(() => {
+			showToast('Ошибка сохранения пользователя: ', 'error', errorCatch(e))
+		}, 500)
 	}
 }
 

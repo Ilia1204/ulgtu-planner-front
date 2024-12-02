@@ -1,117 +1,84 @@
 import { ProTextRegular } from '@/components'
-import ProTextMedium from '@/components/ui/custom-texts/ProTextMedium'
-import ProTextSemiBold from '@/components/ui/custom-texts/ProTextSemiBold'
+import MainHeader from '@/components/ui/headers/MainHeader'
 import { COLORS } from '@/constants/colors.constants'
-import { getClassTypeTranslation } from '@/shared/types/class.interface'
-import { dayWeekTranslation } from '@/shared/types/schedule.interface'
-import dayjs from 'dayjs'
-import React, { FC } from 'react'
-import { Image, Pressable, ScrollView, View } from 'react-native'
+import { groupByDay } from '@/utils/group-by-day'
+import { scrollToCurrentDay } from '@/utils/scroll-to-current-date'
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
+import { RefreshControl, ScrollView, StatusBar, View } from 'react-native'
 import CalendarSvg from './CalendarSvg'
-import { useSchedulesByUser } from './hooks/useSchedulesByUser'
-import { getLessonTimes } from './utils/schedule-times'
-import { schedulesStyles } from './utils/schedules.styles'
+import { useClassesByUser } from './hooks/useClassesByUser'
+import ModalCalendar from './schedule-elements/ModalCalendar'
+import Stories from './schedule-elements/Stories'
+import GroupScheduleItem from './schedule-elements/group-schedule-item/GroupScheduleItem'
+import SkeletonSchedule from './schedule-skeleton/SkeletonSchedule'
 
 const Schedule: FC = () => {
-	const { schedules, isPending } = useSchedulesByUser()
+	const [isVisible, setIsVisible] = useState(false)
+	const scrollViewRef = useRef<ScrollView>(null)
+	const scheduleRefs = useRef<Array<View | null>>([])
+
+	const { classes, isFetching, refetch } = useClassesByUser()
+
+	const onRefresh = useCallback(() => {
+		refetch()
+	}, [refetch])
+
+	useEffect(() => {
+		if (!isFetching) {
+			setTimeout(() => {
+				scrollToCurrentDay(classes, scrollViewRef, scheduleRefs)
+			}, 200)
+		}
+	}, [isFetching, classes, scrollToCurrentDay])
 
 	return (
 		<View
-			className='h-full'
+			className='h-full flex-1'
 			style={{ backgroundColor: COLORS.light.background.tertiary }}
 		>
-			<View
-				className='px-4 flex-row items-center py-2.5 border-b-[#3c3c4321]'
-				style={{
-					borderBottomWidth: 0.5,
-					backgroundColor: 'rgb(247, 247, 247)'
-				}}
-			>
-				<View className='flex-1 items-center'>
-					<ProTextSemiBold
-						className='text-light-label-primary mb-1'
-						text='Расписание'
-						style={{ fontSize: 18 }}
+			<StatusBar
+				backgroundColor={!isVisible ? COLORS.light.background.tertiary : '#fff'}
+				barStyle='dark-content'
+			/>
+			<MainHeader
+				title='Расписание'
+				icon={CalendarSvg}
+				onPressIcon={() => setIsVisible(true)}
+			/>
+			<ModalCalendar isVisible={isVisible} setIsVisible={setIsVisible} />
+			<ScrollView
+				showsVerticalScrollIndicator={false}
+				ref={scrollViewRef}
+				className='flex-1 h-full'
+				refreshControl={
+					<RefreshControl
+						refreshing={isFetching}
+						onRefresh={onRefresh}
+						colors={[COLORS.light.graphics.blue]}
 					/>
-				</View>
-				<Pressable onPress={() => {}} className='absolute right-4'>
-					<CalendarSvg />
-				</Pressable>
-			</View>
-			<ScrollView showsVerticalScrollIndicator={false}>
-				<View className='mt-5 flex-row items-center'>
-					{Array.from({ length: 4 }).map((_, idx) => (
-						<Pressable
-							style={{ height: 120, width: 102 }}
-							key={idx}
-							className={idx === 3 ? 'mx-3' : 'ml-3'}
-						>
-							<Image
-								source={require('@/assets/card.png')}
-								style={{ height: 120, width: 102 }}
-							/>
-							<ProTextMedium
-								text='Европейская научно-промышленная конференция'
-								className='absolute z-50 text-white bottom-3 text-xs px-2.5'
-								numberOfLines={2}
-							/>
-						</Pressable>
-					))}
-				</View>
+				}
+			>
+				<Stories />
 				<View className='mt-3.5'>
-					{schedules?.map(schedule => (
-						<View key={schedule.id}>
-							<ProTextMedium
-								text={`${dayWeekTranslation(schedule.dayWeek).toUpperCase()}, ${dayjs(schedule.date).format('D MMMM').toUpperCase()}`}
-								className={`px-5 text-light-graphics-gray my-3.5`}
+					{isFetching ? (
+						<SkeletonSchedule />
+					) : classes?.length && classes?.length > 0 ? (
+						groupByDay(classes).map(([keyItem, lessons], idx) => (
+							<GroupScheduleItem
+								key={keyItem}
+								keyItem={keyItem}
+								lessons={lessons}
+								idx={idx}
+								scheduleRefs={scheduleRefs}
 							/>
-							{schedule?.classes?.map(lesson => (
-								<Pressable
-									key={lesson.id}
-									className={`bg-white flex-row gap-x-2.5 pb-3`}
-									onPress={() => {}}
-								>
-									<View
-										className='self-start items-center py-3 pt-2'
-										style={{ width: 65 }}
-									>
-										<ProTextSemiBold
-											text={getLessonTimes(lesson.pairNumber).start}
-											style={{ fontSize: 15 }}
-										/>
-										<ProTextRegular
-											text={getLessonTimes(lesson.pairNumber).end}
-											style={{ color: 'rgba(60, 60, 67, 0.6)' }}
-										/>
-										<View className='mt-1 absolute -bottom-2'>
-											<ProTextRegular
-												className='text-light-graphics-gray text-xs'
-												style={{ letterSpacing: -0.08 }}
-												text={`(${lesson.pairNumber}-ая)`}
-											/>
-										</View>
-									</View>
-									<View style={{ ...schedulesStyles.verticalLine }} />
-									<View className='flex-1 pr-3.5 pt-2.5 gap-y-1'>
-										<ProTextSemiBold
-											className='text-light-graphics-blue'
-											style={{ letterSpacing: 0.06, fontSize: 12 }}
-											text={getClassTypeTranslation(lesson.type).toUpperCase()}
-										/>
-										<ProTextSemiBold
-											style={{ letterSpacing: -0.08, lineHeight: 20 }}
-											text={lesson.discipline.name}
-										/>
-										<ProTextRegular
-											className='text-light-graphics-gray text-xs'
-											style={{ letterSpacing: -0.08 }}
-											text={`Ауд. ${lesson.room.name}, ${lesson.room.address}`}
-										/>
-									</View>
-								</Pressable>
-							))}
-						</View>
-					))}
+						))
+					) : (
+						<ProTextRegular
+							text='Пары в системе планирования расписаний для этой группы не найдены 🤔'
+							style={{ letterSpacing: -0.08, lineHeight: 20 }}
+							className='text-center text-light-graphics-gray px-4'
+						/>
+					)}
 				</View>
 			</ScrollView>
 		</View>

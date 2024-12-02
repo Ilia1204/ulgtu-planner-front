@@ -8,13 +8,6 @@ import type { IUser } from './user.interface'
 export interface IEmploymentInfo extends IBase {
 	description: string
 	position: string
-	education: string
-	academicTitles: string[]
-	academicDegrees: string[]
-
-	workExperience: number
-	startDate: string
-	endDate: string
 
 	user: IUser
 	department: IDepartment
@@ -24,3 +17,5 @@ export interface IEmploymentInfo extends IBase {
 	classes: IClass[]
 	finalTests: IFinalTest[]
 }
+
+export type TypeEmploymentInfoForm = Omit<IEmploymentInfo, 'id'> & {}

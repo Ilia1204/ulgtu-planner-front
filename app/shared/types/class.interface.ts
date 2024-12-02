@@ -1,6 +1,8 @@
 import type { IDiscipline } from './discipline.interface'
 import type { IEmploymentInfo } from './employment-info.interface'
 import type { IFlow } from './flow.interface'
+import type { IGroup } from './group.interface'
+import type { INote } from './note.interface'
 import type { IRoom } from './room.interface'
 import type { IBase } from './root.interface'
 import type { ISchedule } from './schedule.interface'
@@ -8,8 +10,9 @@ import type { ISubgroup } from './subgroup.interface'
 
 export interface IClass extends IBase {
 	subgroup: ISubgroup
+	group: IGroup
 	type: EnumClassType
-	pairNumber: number
+	pairNumbers: number[]
 
 	room: IRoom
 	schedule: ISchedule
@@ -17,9 +20,10 @@ export interface IClass extends IBase {
 	discipline: IDiscipline
 
 	flows: IFlow[]
-	// attachment: IAttachment[]
-	// notes: INote[]
+	notes: INote[]
 }
+
+export type TypeClassForm = Omit<IClass, 'id'> & {}
 
 export enum EnumClassType {
 	lecture = 'Лекция',

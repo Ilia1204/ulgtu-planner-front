@@ -13,7 +13,10 @@ const ProTextRegular: FC<PropsWithChildren<IProTextRegular>> = props => {
 
 	return (
 		<Text
-			style={[style, { fontFamily: 'pro-text-regular', letterSpacing: -0.24 }]}
+			style={[
+				style,
+				{ fontFamily: 'pro-text-regular', letterSpacing: -0.24, ...style }
+			]}
 			className={className}
 			numberOfLines={numberOfLines}
 			{...rest}

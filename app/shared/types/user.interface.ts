@@ -1,3 +1,4 @@
+import { IEmploymentInfo } from './employment-info.interface'
 import type { IBase } from './root.interface'
 import type { IStudentInfo } from './student-info.interface'
 
@@ -18,6 +19,7 @@ export interface IUser extends IBase {
 	roles: EnumUserRole[]
 
 	studentInfo: IStudentInfo
+	employmentInfo: IEmploymentInfo
 
 	pushToken?: string
 }

@@ -30,8 +30,8 @@ const ExamsResults: FC = () => {
 			style={{ backgroundColor: COLORS.light.background.quaternary }}
 		>
 			<View
-				className='flex-row items-center h-12 px-2 border-b-[#3c3c4321]'
-				style={{ borderBottomWidth: 0.5 }}
+				className='flex-row items-center  px-2 border-b-[#3c3c4321]'
+				style={{ borderBottomWidth: 0.5, height: 50 }}
 			>
 				<Pressable
 					className='flex-row items-center absolute left-2.5'

@@ -74,62 +74,57 @@ const ExamResultItem: FC<{ result: IStudentExamResult }> = ({ result }) => {
 					text={shortenName(result.finalTest.teacher.user.fullName)}
 				/>
 			</View>
-			<Animated.View style={[heightAnimationStyle]}>
-				<Animated.View ref={listRef}>
-					<View
-						className={`flex-row items-center ${result.finalTest.date && examResultTranslation(result.result) !== EnumExamResult.none ? 'py-2' : 'py-3'}`}
-						style={{
-							borderTopWidth: 0.5,
-							borderTopColor: 'rgba(60, 60, 67, 0.13)'
-						}}
-					>
-						{result.finalTest.date ? (
-							<>
-								{examResultTranslation(result.result) !==
-									EnumExamResult.none && (
-									<>
-										{examResultTranslation(result.result) ===
-											EnumExamResult.not_credited ||
-										examResultTranslation(result.result) ===
-											EnumExamResult.fail ? (
-											<FailMarkSvg />
-										) : (
-											<ExcellentMarkSvg
-												resultType={result.result}
-												examType={result.type}
-											/>
-										)}
-										<ProTextRegular
-											className='text-light-label-primary ml-3'
-											style={{ letterSpacing: -0.08 }}
-											text={`${examResultTranslation(result.result)}`}
+			<Animated.View style={[heightAnimationStyle]} ref={listRef}>
+				<View
+					className={`flex-row items-center ${result.finalTest.date && examResultTranslation(result.result) !== EnumExamResult.none ? 'py-2' : 'py-3'}`}
+					style={{
+						borderTopWidth: 0.5,
+						borderTopColor: 'rgba(60, 60, 67, 0.13)'
+					}}
+				>
+					{result.finalTest.date ? (
+						<>
+							{examResultTranslation(result.result) !== EnumExamResult.none && (
+								<>
+									{examResultTranslation(result.result) ===
+										EnumExamResult.not_credited ||
+									examResultTranslation(result.result) ===
+										EnumExamResult.fail ? (
+										<FailMarkSvg />
+									) : (
+										<ExcellentMarkSvg
+											resultType={result.result}
+											examType={result.type}
 										/>
-									</>
-								)}
-								<ProTextRegular
-									className='text-light-graphics-gray'
-									style={{ letterSpacing: -0.08 }}
-									text={
-										result.finalTest.date &&
-										examResultTranslation(result.result) !== EnumExamResult.none
-											? ` (${dayjs(result.finalTest.date).format(
-													'D MMMM YYYY'
-												)})`
-											: dayjs(result.finalTest.date).format(
-													'D MMMM YYYY, HH:mm, '
-												) + `Ауд. ${result.finalTest?.room?.name}`
-									}
-								/>
-							</>
-						) : (
+									)}
+									<ProTextRegular
+										className='text-light-label-primary ml-3'
+										style={{ letterSpacing: -0.08 }}
+										text={`${examResultTranslation(result.result)}`}
+									/>
+								</>
+							)}
 							<ProTextRegular
 								className='text-light-graphics-gray'
 								style={{ letterSpacing: -0.08 }}
-								text='Дата испытания не назначена'
+								text={
+									result.finalTest.date &&
+									examResultTranslation(result.result) !== EnumExamResult.none
+										? ` (${dayjs(result.finalTest.date).format('D MMMM YYYY')})`
+										: dayjs(result.finalTest.date).format(
+												'D MMMM YYYY, HH:mm, '
+											) + `Ауд. ${result.finalTest?.room?.name}`
+								}
 							/>
-						)}
-					</View>
-				</Animated.View>
+						</>
+					) : (
+						<ProTextRegular
+							className='text-light-graphics-gray'
+							style={{ letterSpacing: -0.08 }}
+							text='Дата испытания не назначена'
+						/>
+					)}
+				</View>
 			</Animated.View>
 		</Pressable>
 	)

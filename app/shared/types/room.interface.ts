@@ -11,6 +11,8 @@ export interface IRoom extends IBase {
 	finalTests: IFinalTest[]
 }
 
+export type TypeRoomForm = Omit<IRoom, 'id'> & {}
+
 export enum EnumRoomType {
 	auditorium = 'Аудитория',
 	cabinet = 'Кабинет',

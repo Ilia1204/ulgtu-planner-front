@@ -3,6 +3,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { saveUserStorage } from '@/services/auth-token.services'
 import { authService } from '@/services/auth.service'
 import type { IAuthForm, IAuthResponse } from '@/shared/types/auth.interface'
+import { showToast } from '@/utils/show-toast'
 import { useMutation } from '@tanstack/react-query'
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
 import { UseFormReset } from 'react-hook-form'
@@ -39,7 +40,9 @@ export const useLogin = (props: IUseLogin) => {
 		},
 		onError(error) {
 			setError(errorCatch(error))
-			console.log(error.message)
+			setTimeout(() => {
+				showToast('Ошибка входа в аккаунт', 'error', errorCatch(error))
+			}, 500)
 		}
 	})
 
@@ -55,7 +58,9 @@ export const useLogin = (props: IUseLogin) => {
 			}
 		},
 		onError(error: any) {
-			console.log(error.message)
+			setTimeout(() => {
+				showToast('Ошибка задания пароля: ', 'error', errorCatch(error))
+			}, 500)
 		}
 	})
 
@@ -71,7 +76,9 @@ export const useLogin = (props: IUseLogin) => {
 			},
 			onError(error: any) {
 				setError(errorCatch(error))
-				console.log(error.message)
+				setTimeout(() => {
+					showToast('Ошибка проверки пароля: ', 'error', errorCatch(error))
+				}, 500)
 			}
 		})
 
@@ -86,7 +93,9 @@ export const useLogin = (props: IUseLogin) => {
 			await setRegistrationState(true)
 		},
 		onError(error) {
-			console.log(error.message)
+			setTimeout(() => {
+				showToast('Ошибка задания почты: ', 'error', errorCatch(error))
+			}, 500)
 		}
 	})
 

@@ -1,36 +1,38 @@
 {
-  "expo": {
-    "name": "УлГТУ",
-    "slug": "улгту",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./app/assets/icon2.png",
-    "userInterfaceStyle": "light",
-    "newArchEnabled": true,
-    "splash": {
-      "image": "./app/assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#007AFF"
-    },
-    "androidStatusBar": {
-      "barStyle": "light-content",
-      "backgroundColor": "#007AFF"
-    },
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./app/assets/icon2.png",
-        "backgroundColor": "#ffffff"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      "expo-secure-store",
-      "expo-font"
-    ]
-  }
+	"expo": {
+		"name": "УлГТУ",
+		"slug": "ulgtu",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"newArchEnabled": true,
+		"userInterfaceStyle": "light",
+		"splash": {
+			"backgroundColor": "#007AFF",
+			"resizeMode": "cover",
+			"image": "./app/assets/splash.png"
+		},
+		"androidStatusBar": {
+			"barStyle": "light-content",
+			"backgroundColor": "#007AFF"
+		},
+		"ios": {
+			"supportsTablet": true
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./app/assets/icon.png",
+				"backgroundColor": "#ffffff"
+			},
+			"package": "com.ilya1204.ulgtu"
+		},
+		"web": {
+			"favicon": "./assets/favicon.png"
+		},
+		"plugins": ["expo-secure-store", "expo-font"],
+		"extra": {
+			"eas": {
+				"projectId": "2aa0d2e9-b63c-4dae-b021-6f047303f644"
+			}
+		}
+	}
 }

@@ -9,7 +9,7 @@ export const setRegistrationState = async (isRegistered: boolean) => {
 			JSON.stringify(isRegistered)
 		)
 	} catch (e) {
-		console.error('Error saving registration state', e)
+		console.error('Ошибка сохранения состояния', e)
 	}
 }
 
@@ -18,7 +18,7 @@ export const getRegistrationState = async () => {
 		const value = await AsyncStorage.getItem(REGISTRATION_STATE_KEY)
 		return value !== null ? JSON.parse(value) : false
 	} catch (e) {
-		console.error('Error getting registration state', e)
+		console.error('Ошибка получения состояния', e)
 		return false
 	}
 }

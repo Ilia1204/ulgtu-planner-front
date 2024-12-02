@@ -1,17 +1,22 @@
 import { ProTextRegular } from '@/components'
 import ProTextSemiBold from '@/components/ui/custom-texts/ProTextSemiBold'
 import { COLORS } from '@/constants/colors.constants'
-import { getEducationLevelTranslation } from '@/shared/types/student-info.interface'
+import { getEducationLevelTranslation } from '@/shared/types/group.interface'
 import type { IFullUser } from '@/shared/types/user.interface'
 import React, { FC, useState } from 'react'
 import { StatusBar, View } from 'react-native'
 import ModalSelector from './ModalSelector'
 
 const MainInfo: FC<{ data: IFullUser | undefined }> = ({ data }) => {
-	const educationLevel = getEducationLevelTranslation(
-		data?.studentInfo?.educationLevel as string
-	)
-	const extraInfo = `${data?.studentInfo?.creditCardNumber || 'YY/XXX'}-${data?.studentInfo?.subgroup?.group?.name}`
+	const educationLevel = data?.studentInfo
+		? getEducationLevelTranslation(
+				data?.studentInfo?.group?.educationLevel as string
+			)
+		: data?.employmentInfo.position
+
+	const extraInfo = data?.studentInfo
+		? `${data?.studentInfo?.creditCardNumber || 'YY/XXX'}-${data?.studentInfo?.group?.name} (${data?.studentInfo?.subgroup?.name[0]} подгруппа)`
+		: data?.email
 
 	const [isVisibleModal, setIsVisibleModal] = useState(false)
 
@@ -32,7 +37,11 @@ const MainInfo: FC<{ data: IFullUser | undefined }> = ({ data }) => {
 				<ProTextSemiBold
 					className='text-light-graphics-blue text-xs'
 					style={{ letterSpacing: 0.06 }}
-					text={educationLevel.toUpperCase()}
+					text={
+						educationLevel
+							? educationLevel.toUpperCase()
+							: data?.employmentInfo.position.toUpperCase()
+					}
 				/>
 				<ProTextSemiBold
 					className='text-light-label-primary mt-2'

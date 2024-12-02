@@ -1,4 +1,5 @@
 import { axiosWithAuth } from '@/api/interceptors'
+import { IClass } from '@/shared/types/class.interface'
 import type {
 	ISchedule,
 	TypeScheduleForm
@@ -20,7 +21,7 @@ class ScheduleService {
 	}
 
 	async getSchedulesForStudent() {
-		const response = await axiosWithAuth.get<ISchedule[]>(
+		const response = await axiosWithAuth.get<IClass[]>(
 			`schedules/get-schedule-for-student`
 		)
 		return response.data

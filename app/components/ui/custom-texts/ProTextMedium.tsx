@@ -19,6 +19,7 @@ const ProTextMedium: FC<PropsWithChildren<IProTextMedium>> = props => {
 			{...rest}
 		>
 			{text}
+			{children ? children : null}
 		</Text>
 	)
 }

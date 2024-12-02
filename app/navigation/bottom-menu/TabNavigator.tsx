@@ -1,11 +1,12 @@
 import ProTextMedium from '@/components/ui/custom-texts/ProTextMedium'
 import { COLORS } from '@/constants/colors.constants'
-import { Chat, Search } from '@/screens'
+import { Chat } from '@/screens'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import React, { FC } from 'react'
 import { View } from 'react-native'
 import ProfileStack from '../stacks/profile-stack/ProfileStack'
 import ScheduleStack from '../stacks/schedule-stack/ScheduleStack'
+import SearchStack from '../stacks/search-stack/SearchStack'
 import BriefcaseSvg from './bottom-menu-svg/BriefcaseSvg'
 import ChatSvg from './bottom-menu-svg/ChatSvg'
 import SearchSvg from './bottom-menu-svg/SearchSvg'
@@ -23,7 +24,8 @@ const TabNavigator: FC = () => (
 			tabBarStyle: {
 				backgroundColor: COLORS.light.background.quaternary,
 				elevation: 0,
-				height: 70,
+				height: 65,
+				paddingTop: 5,
 				paddingBottom: 7,
 				borderTopColor: '#3c3c4321',
 				borderTopWidth: 0.5
@@ -63,8 +65,8 @@ const TabNavigator: FC = () => (
 			}}
 		/>
 		<Tab.Screen
-			name='Search'
-			component={Search}
+			name='SearchStack'
+			component={SearchStack}
 			options={{
 				tabBarIcon: ({ color }) => (
 					<View className='items-center justify-center'>

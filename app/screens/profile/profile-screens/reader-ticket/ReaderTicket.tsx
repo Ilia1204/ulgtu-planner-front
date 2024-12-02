@@ -2,7 +2,9 @@ import { ProTextRegular } from '@/components'
 import ProTextSemiBold from '@/components/ui/custom-texts/ProTextSemiBold'
 import { COLORS } from '@/constants/colors.constants'
 import { useTypedNavigation } from '@/hooks/useTypedNavigation'
-import { getEducationLevelTranslation } from '@/shared/types/student-info.interface'
+import UserSvg from '@/navigation/bottom-menu/bottom-menu-svg/UserSvg'
+import { getEducationLevelTranslation } from '@/shared/types/group.interface'
+import { getMediaSource } from '@/utils/get-media-source'
 import dayjs from 'dayjs'
 import React, { FC } from 'react'
 import { Image, Pressable, View } from 'react-native'
@@ -14,9 +16,11 @@ const ReaderTicket: FC = () => {
 	const { goBack } = useTypedNavigation()
 	const { data } = useProfile()
 
-	const educationLevel = getEducationLevelTranslation(
-		data?.studentInfo?.educationLevel as string
-	)
+	const educationLevel = data?.studentInfo
+		? getEducationLevelTranslation(
+				data?.studentInfo?.group?.educationLevel as string
+			)
+		: data?.employmentInfo.position
 
 	return (
 		<View
@@ -24,8 +28,9 @@ const ReaderTicket: FC = () => {
 			style={{ backgroundColor: COLORS.light.background.quaternary }}
 		>
 			<Pressable
-				className='flex-row items-center self-start h-12 px-4'
+				className='flex-row items-center self-start px-4'
 				onPress={goBack}
+				style={{ height: 50 }}
 			>
 				<BackIconSvg />
 				<ProTextRegular
@@ -56,14 +61,24 @@ const ReaderTicket: FC = () => {
 							text='ЧИТАТЕЛЬ'
 						/>
 					</View>
-					<Image
-						source={require('@/assets/images/default-avatar.jpg')}
-						className='rounded-full'
-						style={{ width: 100, aspectRatio: 1 }}
-					/>
+					{data?.avatarPath ? (
+						<Image
+							source={getMediaSource(data?.avatarPath)}
+							className='rounded-full'
+							style={{ width: 100, aspectRatio: 1 }}
+							resizeMode='center'
+						/>
+					) : (
+						<View
+							className='rounded-full bg-light-graphics-gray6 justify-center items-center'
+							style={{ width: 100, aspectRatio: 1 }}
+						>
+							<UserSvg color={COLORS.light.graphics.gray} size={28} />
+						</View>
+					)}
 				</View>
-				<View className='mt-5 flex-row items-center justify-between'>
-					<View>
+				<View className='mt-5 flex-row  justify-between'>
+					<View className='flex-1'>
 						<ProTextSemiBold
 							style={{ letterSpacing: 0.06 }}
 							className='text-light-label-secondary opacity-60 text-xs'
@@ -85,7 +100,7 @@ const ReaderTicket: FC = () => {
 							text={dayjs(data?.birthDate).format('DD.MM.YYYY')}
 						/>
 					</View>
-					<View>
+					<View className='flex-1'>
 						<ProTextSemiBold
 							style={{ letterSpacing: 0.06 }}
 							className='text-light-label-secondary opacity-60 text-xs'
@@ -93,42 +108,49 @@ const ReaderTicket: FC = () => {
 						/>
 						<ProTextRegular
 							className='mt-1'
-							style={{
-								fontSize: 17,
-								letterSpacing: -0.41
-							}}
+							style={{ fontSize: 17, letterSpacing: -0.41 }}
 							text={data?.libraryCardNumber}
 						/>
 						<ProTextSemiBold
 							style={{ letterSpacing: 0.06 }}
 							className='text-light-label-secondary opacity-60 text-xs mt-5'
-							text='ГРУППА'
+							text={data?.studentInfo ? 'ГРУППА' : 'КАФЕДРА'}
 						/>
 						<ProTextRegular
 							className='mt-1'
 							style={{ fontSize: 17, letterSpacing: -0.41 }}
-							text={data?.studentInfo.group.name}
+							text={
+								data?.studentInfo
+									? data?.studentInfo?.group.name
+									: data?.employmentInfo?.department?.name
+							}
 						/>
 					</View>
 				</View>
-				<View className='mt-3'>
-					<ProTextSemiBold
-						style={{ letterSpacing: 0.06 }}
-						className='text-light-label-secondary opacity-60 text-xs mt-5'
-						text='ФАКУЛЬТЕТ'
-					/>
-					<ProTextRegular
-						className='mt-1'
-						style={{
-							fontSize: 17,
-							letterSpacing: -0.41,
-							lineHeight: 24
-						}}
-						text={data?.studentInfo?.group.flow.faculty?.toUpperCase()}
-					/>
-					<View className='mt-8 items-center'>
-						<BarCodeSvg />
+				{data?.studentInfo ? (
+					<View className='mt-3'>
+						<ProTextSemiBold
+							style={{ letterSpacing: 0.06 }}
+							className='text-light-label-secondary opacity-60 text-xs mt-5'
+							text='ФАКУЛЬТЕТ'
+						/>
+						<ProTextRegular
+							className='mt-1'
+							style={{
+								fontSize: 17,
+								letterSpacing: -0.41,
+								lineHeight: 24
+							}}
+							text={
+								data?.studentInfo
+									? data?.studentInfo?.group?.flow.faculty?.toUpperCase()
+									: data?.employmentInfo?.department?.name
+							}
+						/>
 					</View>
+				) : null}
+				<View className='items-center mt-8'>
+					<BarCodeSvg />
 				</View>
 			</View>
 		</View>
