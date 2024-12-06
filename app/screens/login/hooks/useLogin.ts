@@ -40,9 +40,6 @@ export const useLogin = (props: IUseLogin) => {
 		},
 		onError(error) {
 			setError(errorCatch(error))
-			setTimeout(() => {
-				showToast('Ошибка входа в аккаунт', 'error', errorCatch(error))
-			}, 500)
 		}
 	})
 
@@ -76,9 +73,6 @@ export const useLogin = (props: IUseLogin) => {
 			},
 			onError(error: any) {
 				setError(errorCatch(error))
-				setTimeout(() => {
-					showToast('Ошибка проверки пароля: ', 'error', errorCatch(error))
-				}, 500)
 			}
 		})
 

@@ -8,4 +8,7 @@ export interface IGroupScheduleItem {
 	idx: number
 	scheduleRefs: MutableRefObject<(View | null)[]>
 	keyItem: string
+	isHasTextGroup?: boolean
+	isHasTeacher?: boolean
+	isHasTeacherGroup?: boolean
 }

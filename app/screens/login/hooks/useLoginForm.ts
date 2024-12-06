@@ -64,10 +64,7 @@ export const useLoginForm = () => {
 
 	const updatedSteps = isRegistered
 		? [
-				{
-					...registrationSteps[0],
-					buttonText: 'Войти'
-				},
+				{ ...registrationSteps[0], buttonText: 'Войти' },
 				{
 					...registrationSteps[1],
 					title: `Здравствуйте, ${data?.data.name}! Введите пароль`,

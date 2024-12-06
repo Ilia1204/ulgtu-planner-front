@@ -6,7 +6,8 @@ export const useTeacherById = (teacherId: string) => {
 	const {
 		data: teacher,
 		isFetching,
-		isPending
+		isPending,
+		refetch
 	} = useQuery({
 		queryKey: ['get teacher by id'],
 		queryFn: () => employmentInfoService.getById(teacherId),
@@ -14,5 +15,5 @@ export const useTeacherById = (teacherId: string) => {
 		initialData: {} as IEmploymentInfo
 	})
 
-	return { teacher, isFetching, isPending }
+	return { teacher, isFetching, isPending, refetch }
 }

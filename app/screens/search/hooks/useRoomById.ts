@@ -6,7 +6,8 @@ export const useRoomById = (roomId: string) => {
 	const {
 		data: room,
 		isFetching,
-		isPending
+		isPending,
+		refetch
 	} = useQuery({
 		queryKey: ['get room by id'],
 		queryFn: () => roomService.getById(roomId),
@@ -14,5 +15,5 @@ export const useRoomById = (roomId: string) => {
 		initialData: {} as IRoom
 	})
 
-	return { room, isFetching, isPending }
+	return { room, isFetching, isPending, refetch }
 }

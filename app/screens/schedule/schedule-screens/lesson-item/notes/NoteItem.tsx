@@ -1,5 +1,6 @@
 import { ProTextRegular } from '@/components'
 import ProTextMedium from '@/components/ui/custom-texts/ProTextMedium'
+import { useProfile } from '@/screens/profile/useProfile'
 import { INote } from '@/shared/types/note.interface'
 import { shortenName } from '@/utils/shorten-name'
 import React, { FC, useRef } from 'react'
@@ -11,6 +12,10 @@ const NoteItem: FC<{ note: INote }> = ({ note }) => {
 	const translateX = useRef(new Animated.Value(0)).current
 	const panResponder = useRef(createPanResponder(translateX)).current
 
+	const { data: user } = useProfile()
+
+	const isNoteUser = note.userId === user?.id
+
 	const { deleteNote } = useNote()
 
 	return (
@@ -20,7 +25,7 @@ const NoteItem: FC<{ note: INote }> = ({ note }) => {
 			className='mb-1'
 		>
 			<View
-				{...panResponder.panHandlers}
+				{...(isNoteUser ? panResponder.panHandlers : {})}
 				className='bg-white flex-row px-5 justify-between py-3.5'
 				style={{
 					borderTopWidth: 0.5,

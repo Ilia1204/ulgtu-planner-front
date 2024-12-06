@@ -13,7 +13,7 @@ import { Controller } from 'react-hook-form'
 import { FlatList, Pressable, TextInput, View } from 'react-native'
 import ArrowRightSvg from '../profile/profile-svg/common/ArrowRight'
 import { SearchResults, useSearch } from './hooks/useSearch'
-import ClearSearchSvg from './search-svg/ClearSearchSvg'
+import ClearSearchSvg from './search-item/search-item-elements/search-svg/ClearSearchSvg'
 
 const Search: FC = () => {
 	const { control, data, searchTerm, isLoading } = useSearch()

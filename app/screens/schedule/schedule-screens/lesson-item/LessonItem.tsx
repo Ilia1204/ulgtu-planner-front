@@ -28,7 +28,7 @@ const LessonItem: FC = () => {
 
 	const { goBack, navigate } = useTypedNavigation()
 	const { params } = useTypedRoute<'LessonItem'>()
-	const { lesson, isPending, isFetching } = useLessonById(params.id)
+	const { lesson, isFetching } = useLessonById(params.id)
 
 	const { data: user } = useProfile()
 
@@ -160,9 +160,9 @@ const LessonItem: FC = () => {
 									<ProTextRegular
 										className='text-light-graphics-gray mb-1.5'
 										style={{ letterSpacing: 0.12, fontSize: 13 }}
-										text='ИНФОРМАЦИЯ О ПОТОКЕ'
+										text='ИНФОРМАЦИЯ О ПОТОКАХ'
 									/>
-									{lesson.flows?.slice(0, 1).map((flow, idx) => {
+									{lesson.flows?.map((flow, idx) => {
 										const groupNamesString = sortAndGroupGroups(
 											flow.groups || []
 										)

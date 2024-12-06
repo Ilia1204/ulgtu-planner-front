@@ -33,7 +33,7 @@ export const scrollToCurrentDay = async (
 
 			setTimeout(() => {
 				scrollViewRef.current?.scrollTo({ y: y - 52, animated: true })
-			}, 200)
+			}, 100)
 		}
 	}
 }

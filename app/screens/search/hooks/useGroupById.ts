@@ -6,7 +6,8 @@ export const useGroupById = (groupId: string) => {
 	const {
 		data: group,
 		isFetching,
-		isPending
+		isPending,
+		refetch
 	} = useQuery({
 		queryKey: ['get group by id'],
 		queryFn: () => groupService.getById(groupId),
@@ -14,5 +15,5 @@ export const useGroupById = (groupId: string) => {
 		initialData: {} as IGroup
 	})
 
-	return { group, isFetching, isPending }
+	return { group, isFetching, isPending, refetch }
 }

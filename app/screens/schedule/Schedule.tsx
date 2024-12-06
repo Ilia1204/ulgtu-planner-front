@@ -7,7 +7,6 @@ import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { RefreshControl, ScrollView, StatusBar, View } from 'react-native'
 import CalendarSvg from './CalendarSvg'
 import { useClassesByUser } from './hooks/useClassesByUser'
-import ModalCalendar from './schedule-elements/ModalCalendar'
 import Stories from './schedule-elements/Stories'
 import GroupScheduleItem from './schedule-elements/group-schedule-item/GroupScheduleItem'
 import SkeletonSchedule from './schedule-skeleton/SkeletonSchedule'
@@ -27,7 +26,7 @@ const Schedule: FC = () => {
 		if (!isFetching) {
 			setTimeout(() => {
 				scrollToCurrentDay(classes, scrollViewRef, scheduleRefs)
-			}, 200)
+			}, 100)
 		}
 	}, [isFetching, classes, scrollToCurrentDay])
 
@@ -45,7 +44,7 @@ const Schedule: FC = () => {
 				icon={CalendarSvg}
 				onPressIcon={() => setIsVisible(true)}
 			/>
-			<ModalCalendar isVisible={isVisible} setIsVisible={setIsVisible} />
+			{/* <ModalCalendar isVisible={isVisible} setIsVisible={setIsVisible} /> */}
 			<ScrollView
 				showsVerticalScrollIndicator={false}
 				ref={scrollViewRef}
@@ -70,6 +69,9 @@ const Schedule: FC = () => {
 								lessons={lessons}
 								idx={idx}
 								scheduleRefs={scheduleRefs}
+								isHasTeacher={false}
+								isHasTeacherGroup
+								isHasTextGroup
 							/>
 						))
 					) : (
